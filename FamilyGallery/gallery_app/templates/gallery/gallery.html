@@ -1,0 +1,19 @@
+<!-- templates/gallery/gallery.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Family Photo Gallery</title>
+</head>
+<body>
+    <h1>Family Photo Gallery</h1>
+    <div>
+        {% for photo in photos %}
+            <div>
+                <h2>{{ photo.title }}</h2>
+                <img src="{{ photo.image.url }}" alt="{{ photo.title }}">
+                <p>{{ photo.description }}</p>
+            </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
