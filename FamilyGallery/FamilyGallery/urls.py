@@ -20,8 +20,11 @@ from django.urls import path
 from gallery_app.views import gallery_view, upload_view
 from django.conf import settings
 from django.conf.urls.static import static
+from gallery_app import views
 
 urlpatterns = [
+    path('', views.index, name='index'),
+    path('', views.home, name='home'),
     path('admin/', admin.site.urls),
     path('gallery/', include('gallery_app.urls')),
 ]
