@@ -16,6 +16,13 @@
             <label for="image">Image:</label>
             <input type="file" name="image" class="form-control-file" id="image" required>
 
+            <label for="group">Group:</label>
+            <select name="group" required>
+                {% for group in groups %}
+                    <option value="{{ group.id }}">{{ group.name }}</option>
+                {% endfor %}
+            </select>
+
         </div>
         <button type="submit" class="btn btn-primary">Upload</button>
     </form>
