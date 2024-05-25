@@ -1,26 +1,23 @@
-<!-- templates/gallery/upload.html -->
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Upload Photo</title>
-</head>
-<body>
-    <h1>Upload Photo</h1>
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1 class="my-4">Upload Photo</h1>
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        <div>
+        <div class="form-group">
+
             <label for="title">Title:</label>
             <input type="text" name="title" required>
-        </div>
-        <div>
+
             <label for="description">Description:</label>
             <textarea name="description"></textarea>
-        </div>
-        <div>
+
             <label for="image">Image:</label>
-            <input type="file" name="image" required>
+            <input type="file" name="image" class="form-control-file" id="image" required>
+
         </div>
-        <button type="submit">Upload</button>
+        <button type="submit" class="btn btn-primary">Upload</button>
     </form>
-</body>
-</html>
+</div>
+{% endblock %}

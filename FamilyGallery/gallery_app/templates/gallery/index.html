@@ -1,14 +1,34 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Family Gallery Index</title>
-</head>
-<body>
-    <h1>Family Gallery</h1>
-    <ul>
-        <li><a href="{% url 'home' %}">Home</a></li>
-        <li><a href="{% url 'gallery' %}">Gallery</a></li>
-        <li><a href="{% url 'upload' %}">Upload</a></li>
-    </ul>
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="row mt-4">
+    <div class="col-md-4">
+        <div class="card">
+            <img src="path/to/home_image.jpg" class="card-img-top" alt="Home">
+            <div class="card-body">
+                <h5 class="card-title">Home</h5>
+                <a href="{% url 'home' %}" class="btn btn-primary">Go to Home</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <img src="path/to/gallery_image.jpg" class="card-img-top" alt="Gallery">
+            <div class="card-body">
+                <h5 class="card-title">Gallery</h5>
+                <a href="{% url 'gallery' %}" class="btn btn-primary">Go to Gallery</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <img src="path/to/upload_image.jpg" class="card-img-top" alt="Upload">
+            <div class="card-body">
+                <h5 class="card-title">Upload</h5>
+                <a href="{% url 'upload' %}" class="btn btn-primary">Go to Upload</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

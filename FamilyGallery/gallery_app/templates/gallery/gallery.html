@@ -1,19 +1,18 @@
-<!-- templates/gallery/gallery.html -->
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Family Photo Gallery</title>
-</head>
-<body>
-    <h1>Family Photo Gallery</h1>
-    <div>
-        {% for photo in photos %}
-            <div>
-                <h2>{{ photo.title }}</h2>
-                <img src="{{ photo.image.url }}" alt="{{ photo.title }}">
-                <p>{{ photo.description }}</p>
-            </div>
-        {% endfor %}
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1 class="my-4">Family Photo Gallery</h1>
+    {% for photo in photos %}
+    <div class="row">
+        <!-- Add image thumbnails here -->
+        <h2>{{ photo.title }}</h2>
+        <div class="col-lg-3 col-md-4 col-6">
+            <img src="{{ photo.image.url }}" class="img-thumbnail" alt="{{ photo.title }}">
+        </div>
+        <p>{{ photo.description }}</p>
+        <!-- Repeat for more images -->
     </div>
-</body>
-</html>
+    {% endfor %}
+</div>
+{% endblock %}
