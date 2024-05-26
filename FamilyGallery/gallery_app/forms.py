@@ -1,5 +1,5 @@
 from django import forms
-from .models import Photo, PhotoGroup
+from .models import Photo, Group
 
 class PhotoForm(forms.ModelForm):
     class Meta:
@@ -8,5 +8,5 @@ class PhotoForm(forms.ModelForm):
 
 class PhotoGroupForm(forms.ModelForm):
     class Meta:
-        model = PhotoGroup
-        fields = ['name', 'description']
+        model = Group
+        fields = ['name']
