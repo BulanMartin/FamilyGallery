@@ -8,9 +8,16 @@ def home(request):
 def index(request):
     return render(request, 'gallery/index.html')
 
+
 def gallery_view(request):
-    photos = Photo.objects.all()
-    return render(request, 'gallery/gallery.html', {'photos': photos})
+    groups = Group.objects.all()
+    photos_by_group = {}
+    for group in groups:
+        photos_by_group[group] = Photo.objects.filter(group=group)
+    
+    return render(request, 'gallery/gallery.html', {
+        'photos_by_group': photos_by_group
+    })
 
 def upload_view(request):
     if request.method == 'POST':
