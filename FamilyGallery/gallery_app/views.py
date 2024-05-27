@@ -38,3 +38,6 @@ def add_group(request):
     else:
         form = PhotoGroupForm()
     return render(request, 'gallery/create_group.html', {'form': form})
+
+def gallery_administration(request):
+    return render(request, 'gallery/gallery_administration.html')
