@@ -4,32 +4,48 @@
 
 {% load static %}
 <div class="row mt-4">
-    <div class="col-md-4">
-        <div class="card">
-            <img src="{% static 'images/house.svg' %}" class="card-img-top img-fluid" alt="Home" style="width: 5%;">
-            <div class="card-body">
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 shadow-sm">
+            <img src="{% static 'images/house.svg' %}" class="card-img-top mx-auto mt-3" alt="Home" style="width: 30%;">
+            <div class="card-body text-center">
                 <h5 class="card-title">Home</h5>
-                <a href="{% url 'home' %}" class="btn btn-primary">Go to Home</a>
+                <a href="{% url 'home' %}" class="btn btn-outline-primary">Go to Home</a>
             </div>
         </div>
     </div>
-    <div class="col-md-4">
-        <div class="card">
-            <img src="{% static 'images/images.svg' %}" class="card-img-top img-fluid" alt="Gallery" style="width: 5%;">
-            <div class="card-body">
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 shadow-sm">
+            <img src="{% static 'images/images.svg' %}" class="card-img-top mx-auto mt-3" alt="Gallery" style="width: 30%;">
+            <div class="card-body text-center">
                 <h5 class="card-title">Gallery</h5>
-                <a href="{% url 'gallery' %}" class="btn btn-primary">Go to Gallery</a>
+                <a href="{% url 'gallery' %}" class="btn btn-outline-primary">Go to Gallery</a>
             </div>
         </div>
     </div>
-    <div class="col-md-4">
-        <div class="card">
-            <img src="{% static 'images/upload.svg' %}" class="card-img-top img-fluid" alt="Upload" style="width: 5%;">
-            <div class="card-body">
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 shadow-sm">
+            <img src="{% static 'images/upload.svg' %}" class="card-img-top mx-auto mt-3" alt="Upload" style="width: 30%;">
+            <div class="card-body text-center">
                 <h5 class="card-title">Upload</h5>
-                <a href="{% url 'upload' %}" class="btn btn-primary">Go to Upload</a>
+                <a href="{% url 'upload' %}" class="btn btn-outline-primary">Go to Upload</a>
             </div>
         </div>
     </div>
 </div>
+
+<style>
+    .card-title {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-weight: bold;
+        color: #2c3e50;
+    }
+    .btn-outline-primary {
+        border-color: #2c3e50;
+        color: #2c3e50;
+    }
+    .btn-outline-primary:hover {
+        background-color: #2c3e50;
+        color: #ffffff;
+    }
+</style>
 {% endblock %}
