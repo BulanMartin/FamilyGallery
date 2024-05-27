@@ -21,11 +21,9 @@ def gallery_view(request):
 
 def upload_view(request):
     if request.method == 'POST':
-        title = request.POST['title']
-        description = request.POST['description']
         image = request.FILES['image']
         group = Group.objects.get(id=request.POST['group'])
-        Photo.objects.create(title=title, description=description, image=image, group=group)
+        Photo.objects.create(image=image, group=group)
         return redirect('gallery')
     
     groups = Group.objects.all()
