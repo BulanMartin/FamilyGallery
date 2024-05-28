@@ -40,5 +40,5 @@ def add_group(request):
     return render(request, 'gallery/create_group.html', {'form': form})
 
 def gallery_administration(request):
-    photos = Photo.objects.all().order_by('group', 'uploaded_at')
-    return render(request, 'gallery/gallery_administration.html', {'photos': photos})
+    groups = Group.objects.prefetch_related('photos').all()
+    return render(request, 'gallery/gallery_administration.html', {'groups': groups})
