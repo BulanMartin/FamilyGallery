@@ -3,19 +3,33 @@
 {% block content %}
 <div class="container my-5">
     <h1 class="my-4">Family Photo Gallery</h1>
-    {% for group, group_photos in photos_by_group.items %}
-        <div class="group-section my-5">
-            <h2>{{ group.name }}</h2>
-            <div class="row">
-                {% for photo in group_photos %}
-                    <div class="col-lg-3 col-md-4 col-6 mb-4">
-                        <div class="card h-100">
-                            <img src="{{ photo.image.url }}" class="card-img-top img-thumbnail" alt="{{ photo.title }}">
+    {% if photos_by_group %}
+        <div class="accordion" id="accordionExample">
+            {% for group, group_photos in photos_by_group.items %}
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="heading{{ group.id }}">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ group.id }}" aria-expanded="false" aria-controls="collapse{{ loop.index }}">
+                            {{ group.name }}
+                        </button>
+                    </h2>
+                    <div id="collapse{{ group.id }}" class="accordion-collapse collapse" aria-labelledby="heading{{ group.id }}">
+                        <div class="accordion-body">
+                            <div class="row">
+                                {% for photo in group_photos %}
+                                    <div class="col-lg-3 col-md-4 col-6 mb-4">
+                                        <div class="card h-100">
+                                            <img src="{{ photo.image.url }}" class="card-img-top img-thumbnail" alt="{{ photo.title }}">
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
                         </div>
                     </div>
-                {% endfor %}
-            </div>
+                </div>
+            {% endfor %}
         </div>
-    {% endfor %}
+    {% else %}
+        <p>No photos available.</p>
+    {% endif %}
 </div>
 {% endblock %}
