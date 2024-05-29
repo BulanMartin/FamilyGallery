@@ -19,7 +19,7 @@
                                     <div class="col-lg-3 col-md-4 col-6 mb-4">
                                         <div class="card h-100">
                                             <a href="#" data-bs-toggle="modal" data-bs-target="#photoModal{{ photo.id }}">
-                                                <img src="{{ photo.image.url }}" class="card-img-top img-thumbnail" alt="{{ photo.title }}">
+                                                <img src="{{ photo.image.url }}" class="card-img-top img-thumbnail" alt="{{ photo.image.name }}">
                                             </a>
                                         </div>
                                     </div>
@@ -29,11 +29,11 @@
                                         <div class="modal-dialog modal-dialog-centered modal-lg">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="photoModalLabel{{ photo.id }}">{{ photo.title }}</h5>
+                                                    <h5 class="modal-title" id="photoModalLabel{{ photo.id }}">{{ photo.image.name }}</h5>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <img src="{{ photo.image.url }}" class="img-fluid" alt="{{ photo.title }}">
+                                                    <img src="{{ photo.image.url }}" class="img-fluid" alt="{{ photo.image.name }}">
                                                 </div>
                                             </div>
                                         </div>
