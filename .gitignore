@@ -2,3 +2,6 @@ venv/
 
 # Ignore all files in the media/photos directory
 FamilyGallery/media/photos/*
+
+# Ignore database file
+FamilyGallery/db.sqlite3
