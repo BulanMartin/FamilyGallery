@@ -42,3 +42,7 @@ def delete_image_file(sender, instance, **kwargs):
     if instance.image:
         if os.path.isfile(instance.image.path):
             os.remove(instance.image.path)
+    
+    # Check if the group has any other photos
+    if not instance.group.photos.exists():
+        instance.group.delete()
