@@ -1,4 +1,4 @@
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 from .models import Photo, Group
 from .forms import PhotoGroupForm
 
@@ -42,3 +42,9 @@ def add_group(request):
 def gallery_administration(request):
     groups = Group.objects.prefetch_related('photos').all()
     return render(request, 'gallery/gallery_administration.html', {'groups': groups})
+
+def delete_photo(request, photo_id):
+    if request.method == "POST":
+        photo = get_object_or_404(Photo, id=photo_id)
+        photo.delete()
+        return redirect('gallery_administration')

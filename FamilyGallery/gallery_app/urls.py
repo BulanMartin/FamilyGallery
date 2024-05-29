@@ -1,10 +1,10 @@
 from django.urls import path
-from .views import gallery_view, upload_view, add_group, gallery_administration
-
+from .views import gallery_view, upload_view, add_group, gallery_administration, delete_photo
 
 urlpatterns = [
     path('', gallery_view, name='gallery'),
     path('upload/', upload_view, name='upload'),
     path('add-group/', add_group, name='add_group'),
     path('gallery_administration/', gallery_administration, name='gallery_administration'),
+    path('delete_photo/<int:photo_id>/', delete_photo, name='delete_photo'),
 ]
