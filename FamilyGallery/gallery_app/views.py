@@ -20,13 +20,18 @@ def gallery_view(request):
     })
 
 def upload_view(request):
+
+    groups = Group.objects.all()
+
     if request.method == 'POST':
         image = request.FILES['image']
         group = Group.objects.get(id=request.POST['group'])
-        Photo.objects.create(image=image, group=group)
-        return redirect('gallery')
-    
-    groups = Group.objects.all()
+        try:
+            Photo.objects.create(image=image, group=group)
+            return redirect('gallery')
+        except ValueError as e:
+            return render(request, 'gallery/upload.html', {'error': str(e), 'groups': groups})
+        
     return render(request, 'gallery/upload.html', {'groups': groups})
 
 def add_group(request):

@@ -7,7 +7,7 @@ class GroupAdmin(admin.ModelAdmin):
 
 @admin.register(Photo)
 class PhotoAdmin(admin.ModelAdmin):
-    list_display = ['id', 'group']
+    list_display = ['id', 'group', 'image', 'image_hash']
     list_filter = ['group']
 
 #admin.site.register(Photo)
