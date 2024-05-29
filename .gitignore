@@ -1,1 +1,4 @@
 venv/
+
+# Ignore all files in the media/photos directory
+FamilyGallery/media/photos/*
