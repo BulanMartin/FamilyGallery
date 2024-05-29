@@ -18,7 +18,24 @@
                                 {% for photo in group_photos %}
                                     <div class="col-lg-3 col-md-4 col-6 mb-4">
                                         <div class="card h-100">
-                                            <img src="{{ photo.image.url }}" class="card-img-top img-thumbnail" alt="{{ photo.title }}">
+                                            <a href="#" data-bs-toggle="modal" data-bs-target="#photoModal{{ photo.id }}">
+                                                <img src="{{ photo.image.url }}" class="card-img-top img-thumbnail" alt="{{ photo.title }}">
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="photoModal{{ photo.id }}" tabindex="-1" aria-labelledby="photoModalLabel{{ photo.id }}" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered modal-lg">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="photoModalLabel{{ photo.id }}">{{ photo.title }}</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <img src="{{ photo.image.url }}" class="img-fluid" alt="{{ photo.title }}">
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 {% endfor %}
