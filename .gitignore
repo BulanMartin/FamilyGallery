@@ -5,3 +5,6 @@ FamilyGallery/media/photos/*
 
 # Ignore database file
 FamilyGallery/db.sqlite3
+
+# ignore __pycache__
+FamilyGallery/gallery_app/__pycache__
