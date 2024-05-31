@@ -1,6 +1,9 @@
 from django.shortcuts import redirect, render, get_object_or_404
 from .models import Photo, Group
-from .forms import PhotoGroupForm
+from .forms import PhotoGroupForm, UploadFolderForm
+from django.http import HttpResponse
+import hashlib
+
 
 def home(request):
     return render(request, 'gallery/home.html')
@@ -53,3 +56,36 @@ def delete_photo(request, photo_id):
         photo = get_object_or_404(Photo, id=photo_id)
         photo.delete()
         return redirect('gallery_administration')
+    
+def upload_folder(request):
+    if request.method == 'POST':
+        form = UploadFolderForm(request.POST, request.FILES)
+        print(form)
+        print(request.FILES)
+        print(request.POST)
+        print(request.FILES.getlist('images'))
+        if form.is_valid():
+            name = form.cleaned_data['name']
+            files = request.FILES.getlist('images')
+            # Create a new group
+            group = Group.objects.create(name=name)
+
+            for file in files:
+                # Calculate the hash of the image
+                hasher = hashlib.sha256()
+                for chunk in file.chunks():
+                    hasher.update(chunk)
+                image_hash = hasher.hexdigest()
+
+                # Check if a photo with the same hash already exists
+                if not Photo.objects.filter(image_hash=image_hash).exists():
+                    Photo.objects.create(image=file, group=group, image_hash=image_hash)
+                else:
+                    return HttpResponse("A photo with this content already exists.")
+
+            return redirect('gallery') 
+
+    else:
+        form = UploadFolderForm()
+
+    return render(request, 'gallery/upload_folder.html', {'form': form})
