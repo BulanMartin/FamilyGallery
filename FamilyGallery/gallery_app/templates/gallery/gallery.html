@@ -18,24 +18,9 @@
                                 {% for photo in group_photos %}
                                     <div class="col-lg-3 col-md-4 col-6 mb-4">
                                         <div class="card h-100">
-                                            <a href="#" data-bs-toggle="modal" data-bs-target="#photoModal{{ photo.id }}">
+                                            <a href="#" class="photo-link" data-bs-toggle="modal" data-bs-target="#photoModal" data-photo-id="{{ photo.id }}" data-photo-url="{{ photo.image.url }}" data-photo-name="{{ photo.image.name }}">
                                                 <img src="{{ photo.image.url }}" class="card-img-top img-thumbnail" alt="{{ photo.image.name }}">
                                             </a>
-                                        </div>
-                                    </div>
-
-                                    <!-- Modal -->
-                                    <div class="modal fade" id="photoModal{{ photo.id }}" tabindex="-1" aria-labelledby="photoModalLabel{{ photo.id }}" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered modal-lg">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="photoModalLabel{{ photo.id }}">{{ photo.image.name }}</h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <img src="{{ photo.image.url }}" class="img-fluid" alt="{{ photo.image.name }}">
-                                                </div>
-                                            </div>
                                         </div>
                                     </div>
                                 {% endfor %}
@@ -49,4 +34,71 @@
         <p>No photos available.</p>
     {% endif %}
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="photoModal" tabindex="-1" aria-labelledby="photoModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="photoModalLabel"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <img id="modalImage" src="" class="img-fluid" alt="">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="prevBtn">Previous</button>
+                <button type="button" class="btn btn-secondary" id="nextBtn">Next</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Include Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.2.0/js/bootstrap.min.js"></script>
+
+<!-- Custom JS -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        let currentPhotoIndex = 0;
+        let photos = [];
+
+        // Collect all photos data
+        document.querySelectorAll('.photo-link').forEach((element, index) => {
+            photos.push({
+                id: element.dataset.photoId,
+                url: element.dataset.photoUrl,
+                name: element.dataset.photoName,
+                index: index
+            });
+
+            element.addEventListener('click', function() {
+                currentPhotoIndex = index;
+                updateModalContent();
+            });
+        });
+
+        function updateModalContent() {
+            const photo = photos[currentPhotoIndex];
+            document.getElementById('modalImage').src = photo.url;
+            document.getElementById('photoModalLabel').innerText = photo.name;
+        }
+
+        document.getElementById('nextBtn').addEventListener('click', function() {
+            if (currentPhotoIndex < photos.length - 1) {
+                currentPhotoIndex++;
+                updateModalContent();
+            }
+        });
+
+        document.getElementById('prevBtn').addEventListener('click', function() {
+            if (currentPhotoIndex > 0) {
+                currentPhotoIndex--;
+                updateModalContent();
+            }
+        });
+    });
+</script>
 {% endblock %}
