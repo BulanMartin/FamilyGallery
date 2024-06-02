@@ -19,7 +19,7 @@
                                     <div class="col-lg-3 col-md-4 col-6 mb-4">
                                         <div class="card h-100">
                                             <a href="#" class="photo-link" data-bs-toggle="modal" data-bs-target="#photoModal" data-photo-id="{{ photo.id }}" data-photo-url="{{ photo.image.url }}" data-photo-name="{{ photo.image.name }}">
-                                                <img src="{{ photo.image.url }}" class="card-img-top img-thumbnail" alt="{{ photo.image.name }}">
+                                                <img src="{{ photo.image.url }}" data-src="{{ photo.image.url }}" class="card-img-top img-thumbnail lazy" alt="{{ photo.image.name }}">
                                             </a>
                                         </div>
                                     </div>
@@ -99,6 +99,61 @@
                 updateModalContent();
             }
         });
+
+        // Lazy load images
+        const lazyImages = [].slice.call(document.querySelectorAll("img.lazy"));
+
+        if ("IntersectionObserver" in window) {
+            let lazyImageObserver = new IntersectionObserver(function(entries, observer) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        let lazyImage = entry.target;
+                        lazyImage.src = lazyImage.dataset.src;
+                        lazyImage.classList.remove("lazy");
+                        lazyImageObserver.unobserve(lazyImage);
+                    }
+                });
+            });
+
+            lazyImages.forEach(function(lazyImage) {
+                lazyImageObserver.observe(lazyImage);
+            });
+        } else {
+            // Fallback for browsers without IntersectionObserver support
+            let active = false;
+
+            const lazyLoad = function() {
+                if (active === false) {
+                    active = true;
+
+                    setTimeout(function() {
+                        lazyImages.forEach(function(lazyImage) {
+                            if ((lazyImage.getBoundingClientRect().top <= window.innerHeight && lazyImage.getBoundingClientRect().bottom >= 0) && getComputedStyle(lazyImage).display !== "none") {
+                                lazyImage.src = lazyImage.dataset.src;
+                                lazyImage.classList.remove("lazy");
+
+                                lazyImages = lazyImages.filter(function(image) {
+                                    return image !== lazy
+                                    return image !== lazyImage;
+                                });
+
+                                if (lazyImages.length === 0) {
+                                    document.removeEventListener("scroll", lazyLoad);
+                                    window.removeEventListener("resize", lazyLoad);
+                                    window.removeEventListener("orientationchange", lazyLoad);
+                                }
+                            }
+                        });
+
+                        active = false;
+                    }, 200);
+                }
+            };
+
+            document.addEventListener("scroll", lazyLoad);
+            window.addEventListener("resize", lazyLoad);
+            window.addEventListener("orientationchange", lazyLoad);
+        }
     });
 </script>
 {% endblock %}
