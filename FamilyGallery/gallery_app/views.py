@@ -1,6 +1,6 @@
 from django.shortcuts import redirect, render, get_object_or_404
 from .models import Photo, Group
-from .forms import PhotoGroupForm, UploadFolderForm
+from .forms import PhotoGroupForm, UploadFolderForm, CustomLoginForm
 from django.http import HttpResponse
 import hashlib
 from django.contrib.auth.forms import UserCreationForm
@@ -108,4 +108,5 @@ class CustomLogoutView(LogoutView):
     template_name = 'registration/logout.html'  # Specify the logout template
 
 class CustomLoginView(LoginView):
+    authentication_form = CustomLoginForm()
     template_name = 'registration/login.html'  # Specify the login template
