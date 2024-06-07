@@ -26,6 +26,7 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('', views.home, name='home'),
     path('admin/', admin.site.urls),
+    path('accounts/', include('django.contrib.auth.urls')),  # This line includes the authentication URLs
     path('gallery/', include('gallery_app.urls')),
 ]
 

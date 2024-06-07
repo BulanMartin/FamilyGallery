@@ -3,6 +3,9 @@ from .models import Photo, Group
 from .forms import PhotoGroupForm, UploadFolderForm
 from django.http import HttpResponse
 import hashlib
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login
+from django.contrib.auth.views import LogoutView, LoginView
 
 
 def home(request):
@@ -89,3 +92,20 @@ def upload_folder(request):
         form = UploadFolderForm()
 
     return render(request, 'gallery/upload_folder.html', {'form': form})
+
+def signup(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('home')
+    else:
+        form = UserCreationForm()
+    return render(request, 'registration/signup.html', {'form': form})
+
+class CustomLogoutView(LogoutView):
+    template_name = 'registration/logout.html'  # Specify the logout template
+
+class CustomLoginView(LoginView):
+    template_name = 'registration/login.html'  # Specify the login template
