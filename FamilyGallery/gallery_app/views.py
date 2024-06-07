@@ -6,15 +6,17 @@ import hashlib
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.contrib.auth.views import LogoutView, LoginView
+from django.contrib.auth.decorators import login_required
 
-
+@login_required
 def home(request):
     return render(request, 'gallery/home.html')
 
+@login_required
 def index(request):
     return render(request, 'gallery/index.html')
 
-
+@login_required
 def gallery_view(request):
     groups = Group.objects.all()
     photos_by_group = {}
@@ -25,6 +27,7 @@ def gallery_view(request):
         'photos_by_group': photos_by_group
     })
 
+@login_required
 def upload_view(request):
 
     groups = Group.objects.all()
@@ -40,6 +43,7 @@ def upload_view(request):
         
     return render(request, 'gallery/upload.html', {'groups': groups})
 
+@login_required
 def add_group(request):
     if request.method == 'POST':
         form = PhotoGroupForm(request.POST)
@@ -50,16 +54,19 @@ def add_group(request):
         form = PhotoGroupForm()
     return render(request, 'gallery/create_group.html', {'form': form})
 
+@login_required
 def gallery_administration(request):
     groups = Group.objects.prefetch_related('photos').all()
     return render(request, 'gallery/gallery_administration.html', {'groups': groups})
 
+@login_required
 def delete_photo(request, photo_id):
     if request.method == "POST":
         photo = get_object_or_404(Photo, id=photo_id)
         photo.delete()
         return redirect('gallery_administration')
-    
+
+@login_required    
 def upload_folder(request):
     if request.method == 'POST':
         form = UploadFolderForm(request.POST, request.FILES)
