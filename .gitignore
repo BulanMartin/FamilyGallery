@@ -9,3 +9,4 @@ FamilyGallery/db.sqlite3
 # ignore __pycache__
 FamilyGallery/gallery_app/__pycache__
 FamilyGallery/FamilyGallery/__pycache__
+FamilyGallery/FamilyGallery/FamilyGallery/__pycache__
