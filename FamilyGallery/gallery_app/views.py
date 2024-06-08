@@ -6,7 +6,17 @@ import hashlib
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.contrib.auth.views import LogoutView, LoginView
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test, permission_required
+from django.contrib.auth.models import Group as UserGroup
+
+
+def upload_photo(user):
+    return user.groups.filter(name='upload_photo').exists()
+
+
+def user_is_admin(user):
+    return user.is_staff
+
 
 @login_required
 def home(request):
@@ -28,6 +38,8 @@ def gallery_view(request):
     })
 
 @login_required
+#@user_passes_test(upload_photo)
+@permission_required("gallery_app.add_photo")
 def upload_view(request):
 
     groups = Group.objects.all()
@@ -44,6 +56,7 @@ def upload_view(request):
     return render(request, 'gallery/upload.html', {'groups': groups})
 
 @login_required
+@permission_required("gallery_app.add_group")
 def add_group(request):
     if request.method == 'POST':
         form = PhotoGroupForm(request.POST)
@@ -55,6 +68,7 @@ def add_group(request):
     return render(request, 'gallery/create_group.html', {'form': form})
 
 @login_required
+@permission_required("gallery_app.view_group")
 def gallery_administration(request):
     groups = Group.objects.prefetch_related('photos').all()
     return render(request, 'gallery/gallery_administration.html', {'groups': groups})
@@ -66,7 +80,8 @@ def delete_photo(request, photo_id):
         photo.delete()
         return redirect('gallery_administration')
 
-@login_required    
+@login_required
+@permission_required("gallery_app.add_photo")
 def upload_folder(request):
     if request.method == 'POST':
         form = UploadFolderForm(request.POST, request.FILES)

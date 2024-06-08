@@ -11,14 +11,14 @@ class Command(BaseCommand):
         viewer_group, created = Group.objects.get_or_create(name='viewer')
 
         # Assign Permissions to Groups
-        permissions = Permission.objects.filter(codename__in=['see_gallery', 'add_album', 'upload_photo', 'gallery_administration'])
+        permissions = Permission.objects.filter(codename__in=['view_photo', 'add_group', 'add_photo', 'view_group'])
 
         admin_group.permissions.set(permissions)  # Admins can do everything
 
-        editor_permissions = Permission.objects.filter(codename__in=['see_gallery', 'add_album', 'upload_photo'])
+        editor_permissions = Permission.objects.filter(codename__in=['view_photo', 'add_group', 'add_photo'])
         editor_group.permissions.set(editor_permissions)  
 
-        viewer_permissions = Permission.objects.filter(codename__in=['see_gallery'])
+        viewer_permissions = Permission.objects.filter(codename__in=['view_photo'])
         viewer_group.permissions.set(viewer_permissions)  # Viewers can only view
 
         self.stdout.write(self.style.SUCCESS('Successfully created groups and assigned permissions'))
